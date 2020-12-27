@@ -695,37 +695,22 @@ const input = [
     let solved = false
     while (!solved) {
         doStep = (str) => {
-            if(!str) {
-                console.error('uh oh!!', index, testedIndices)
-                solved = true
-                return
-            }
-
             const regex = /^(?<op>acc|nop|jmp) (?<direction>[\+\-]{1})(?<step>\d+)$/
             const matches = str.match(regex)
             const stepAmount = parseInt(matches.groups.step) * (matches.groups.direction === '+' ? 1 : -1)
             let op = matches.groups.op
 
-            // if(!changedOneOp && ['nop', 'jmp'].includes(op)) {
-
-            // }
+            if (!changedOneOp && ['nop', 'jmp'].includes(op) && !testedIndices.includes(index)) {
+                const newOp = op === 'jmp' ? 'nop' : 'jmp'
+                changedOneOp = true
+                testedIndices.push(index)
+                console.log(`Changed index ${index} from ${op}${stepAmount} to ${newOp}${stepAmount}, resuming...`)
+                op = newOp
+            }
 
             if (executedLines[index]) { // detected a potential infinite loop
-                if(!changedOneOp && !testedIndices.includes(index)) {
-                    // console.log(`[Part 2] redundant '${op}'`)
-                    if (op === 'nop') {
-                        op = 'jmp'
-                        changedOneOp = true
-                        testedIndices.push(index)
-                        console.log(`Changed index ${index} from nop${stepAmount} to jmp${stepAmount}, resuming...`)
-                    } else if (op === 'jmp') {
-                        op = 'nop'
-                        changedOneOp = true
-                        testedIndices.push(index)
-                        console.log(`Changed index ${index} from jmp${stepAmount} to nop${stepAmount}, resuming...`)
-                    }
-                } else if (!testedIndices.includes(index)) { // restart algorithm and retry with next available index
-                    console.log('Restarting from index', index)
+                if (!testedIndices.includes(index)) { // restart algorithm and retry with next available index
+                    console.log('Restarting because of repeating line index:', index)
                     executedLines = {}
                     changedOneOp = false
                     index = 0
@@ -735,7 +720,7 @@ const input = [
             }
             executedLines[index] = true
 
-            console.log(`Executing line ${index}: ${op} ${stepAmount}`)
+            // console.log(`Executing line ${index}: ${op} ${stepAmount}`)
             switch (op) {
                 case 'acc':
                     acc += stepAmount
@@ -749,13 +734,8 @@ const input = [
                     break;
             }
 
-            if(index < 0) {
-                console.error('Negative index', index)
-                process.exit(1)
-            }
-            if (index >= input.length) { // exit from reccursion
+            if (index == input.length) { // exit from reccursion
                 solved = true
-                console.log(index, input.length)
                 console.log('[Part 2] accumulator:', acc)
                 return
             }
@@ -764,8 +744,3 @@ const input = [
         doStep(input[index]) // advance step
     }
 }
-
-// Incorrect responses:
-// 2201
-// 171
-// 181
