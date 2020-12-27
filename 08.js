@@ -655,7 +655,7 @@ const input = [
     let index = 0
     let acc = 0;
     step = (str) => {
-        const regex = /^(?<instruction>acc|nop|jmp) (?<direction>[\+\-]{1})(?<step>\d+)$/
+        const regex = /^(?<op>acc|nop|jmp) (?<direction>[\+\-]{1})(?<step>\d+)$/
         const matches = str.match(regex)
         const stepAmount = parseInt(matches.groups.step) * (matches.groups.direction === '+' ? 1 : -1)
 
@@ -665,7 +665,7 @@ const input = [
         }
         executedIndexes[index] = true
 
-        switch (matches.groups.instruction) {
+        switch (matches.groups.op) {
             case 'acc':
                 acc += stepAmount
                 index++
@@ -688,55 +688,55 @@ const input = [
 
 { // Part 2
     let acc = 0;
-    const incorrectIndices = []
-    let iterations = 1
+    const testedIndices = []
+    let executedLines = {}
+    let index = 0
+    let changedOneOp = false
     let solved = false
     while (!solved) {
-        console.log('-- iteration:', iterations++)
-
-        let executedLines = {}
-        let index = 0
-        let changedInstruction = false
-
         doStep = (str) => {
             if(!str) {
+                console.error('uh oh!!', index, testedIndices)
                 solved = true
                 return
             }
 
-            const regex = /^(?<instruction>acc|nop|jmp) (?<direction>[\+\-]{1})(?<step>\d+)$/
+            const regex = /^(?<op>acc|nop|jmp) (?<direction>[\+\-]{1})(?<step>\d+)$/
             const matches = str.match(regex)
             const stepAmount = parseInt(matches.groups.step) * (matches.groups.direction === '+' ? 1 : -1)
+            let op = matches.groups.op
 
-            let instruction = matches.groups.instruction
-            if (executedLines[index]) { // detected infinite loop
-                if(!changedInstruction && !incorrectIndices.includes(index)) {
-                    // console.log(`[Part 2] redundant '${instruction}'`)
-                    if (instruction === 'nop') {
-                        instruction = 'jmp'
-                        changedInstruction = true
-                        incorrectIndices.push(index)
-                        console.log('Changed index ', index, 'from nop to jmp')
-                    } else if (instruction === 'jmp') {
-                        instruction = 'nop'
-                        changedInstruction = true
-                        incorrectIndices.push(index)
-                        console.log('Changed index ', index, 'from jmp to nop')
+            // if(!changedOneOp && ['nop', 'jmp'].includes(op)) {
+
+            // }
+
+            if (executedLines[index]) { // detected a potential infinite loop
+                if(!changedOneOp && !testedIndices.includes(index)) {
+                    // console.log(`[Part 2] redundant '${op}'`)
+                    if (op === 'nop') {
+                        op = 'jmp'
+                        changedOneOp = true
+                        testedIndices.push(index)
+                        console.log(`Changed index ${index} from nop${stepAmount} to jmp${stepAmount}, resuming...`)
+                    } else if (op === 'jmp') {
+                        op = 'nop'
+                        changedOneOp = true
+                        testedIndices.push(index)
+                        console.log(`Changed index ${index} from jmp${stepAmount} to nop${stepAmount}, resuming...`)
                     }
-                } else if (!incorrectIndices.includes(index)) { // restart algorithm and retry with next available index
+                } else if (!testedIndices.includes(index)) { // restart algorithm and retry with next available index
                     console.log('Restarting from index', index)
                     executedLines = {}
-                    changedInstruction = false
+                    changedOneOp = false
                     index = 0
                     acc = 0
-                    
-                    // return
-                    // doStep(input[index]) // recurse to advance step
+                    return
                 }
             }
             executedLines[index] = true
 
-            switch (instruction) {
+            console.log(`Executing line ${index}: ${op} ${stepAmount}`)
+            switch (op) {
                 case 'acc':
                     acc += stepAmount
                     index++
@@ -749,14 +749,23 @@ const input = [
                     break;
             }
 
+            if(index < 0) {
+                console.error('Negative index', index)
+                process.exit(1)
+            }
             if (index >= input.length) { // exit from reccursion
                 solved = true
+                console.log(index, input.length)
+                console.log('[Part 2] accumulator:', acc)
                 return
             }
-
-            doStep(input[index]) // recurse to advance step
         }
-        doStep(input[index]) // start algorithm
+
+        doStep(input[index]) // advance step
     }
-    console.log('[Part 2] accumulator:', acc)
 }
+
+// Incorrect responses:
+// 2201
+// 171
+// 181
