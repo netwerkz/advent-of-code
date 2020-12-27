@@ -1,3 +1,5 @@
+const assert = require('assert')
+
 const input = [
     145,
     3,
@@ -107,7 +109,7 @@ const input = [
     65,
 ]
 
-const sampleInput = [
+const sampleInput1 = [
     16,
     10,
     15,
@@ -120,7 +122,117 @@ const sampleInput = [
     12,
     4,
 ]
+const sampleInput2 = [
+    28,
+    33,
+    18,
+    42,
+    31,
+    14,
+    46,
+    20,
+    48,
+    47,
+    24,
+    23,
+    49,
+    45,
+    19,
+    38,
+    39,
+    11,
+    1,
+    32,
+    25,
+    35,
+    8,
+    17,
+    7,
+    9,
+    4,
+    2,
+    34,
+    10,
+    3,
+]
 
 { // Part 1
-    
+    const sortedInput = input.sort((a, b) => a > b ? 1 : (a < b ? -1 : 0))
+    const getAvailableAdaptersForJoltage = (joltage) => {
+        const adapters = []
+        for (const entry of sortedInput) {
+            if (entry <= joltage) continue
+            if (entry > joltage + 3) continue
+            adapters.push(entry)
+        }
+        return adapters
+    }
+
+    const diffs = {}
+    let targetJoltage = 0
+    while (true) {
+        const joltages = getAvailableAdaptersForJoltage(targetJoltage)
+        if (!joltages.length) break
+
+        const foundJoltage = joltages[0]
+        const diff = foundJoltage - targetJoltage
+
+        if (!diffs.hasOwnProperty(diff)) {
+            diffs[diff] = 1
+        } else {
+            diffs[diff]++
+        }
+
+        targetJoltage = foundJoltage
+    }
+    if (!diffs.hasOwnProperty(3)) {
+        diffs[3] = 1
+    } else {
+        diffs[3]++
+    }
+
+    console.log('[Part 1] result:', diffs[1] * diffs[3])
+}
+
+{ // Part 2
+    const sortedInput = sampleInput1.sort((a, b) => a > b ? 1 : (a < b ? -1 : 0))
+    const getAvailableAdaptersForJoltage = (joltage) => {
+        const adapters = []
+        for (const entry of sortedInput) {
+            if (entry <= joltage) continue
+            if (entry > joltage + 3) continue
+            adapters.push(entry)
+        }
+        return adapters
+    }
+    const factorial = (num) => {
+        if (num < 0)
+            return -1;
+        else if (num == 0)
+            return 1;
+        else {
+            return (num * factorial(num - 1));
+        }
+    }
+
+    let targetJoltage = 0
+    let groupings = 0
+    let sample = 0
+    while (true) {
+        const joltages = getAvailableAdaptersForJoltage(targetJoltage)
+        if (!joltages.length) break
+
+        console.log(joltages)
+
+        if (joltages.length > 1) {
+            groupings += (joltages.length)
+            sample++
+        }
+
+        const foundJoltage = joltages[0]
+        targetJoltage = foundJoltage
+    }
+
+    console.log('[Part 2] result:', groupings, sample)
+    // assert(arrangementsCounter === 8)
 }
