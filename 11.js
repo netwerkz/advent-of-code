@@ -144,17 +144,13 @@ const sampleInput = [
     }
 
     let solved = false
-    let cycle = 1
     while (!solved) {
-        console.log('Cycle ', cycle++)
-
         let nextConfiguration = {}
         for (let y = 0; y < input.length; y++) {
             let row = ''
             for (let x = 0; x < input[0].length; x++) {
                 const count = countNeighbours(x, y, prevConfiguration)
                 row += count
-                // console.log(count)
                 if (prevConfiguration[key(x, y)] === 'L' && count === 0) {  // If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
                     nextConfiguration[key(x, y)] = '#'
                 } else if (prevConfiguration[key(x, y)] === '#' && count >= 4) { // If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
@@ -180,21 +176,30 @@ const sampleInput = [
 
 { // Part 2
     // const input = sampleInput
-    const countNeighbours = (x, y, grid) => {
+    const directions = []
+    for (let dirY = -1; dirY <= 1; dirY++) {
+        for (let dirX = -1; dirX <= 1; dirX++) {
+            if (dirX == 0 && dirY == 0) continue
+            directions.push([dirX, dirY])
+        }
+    }
+    const countNeighbours = (x, y, grid) => { // ray test
         let count = 0
-        for (let yy = y - 1; yy <= y + 1; yy++) {
-            if (yy < 0 || yy >= input.length) {
-                continue
-            }
-            for (let xx = x - 1; xx <= x + 1; xx++) {
-                if (xx < 0 || xx >= input[0].length) {
-                    continue
-                }
-                if (x == xx && y == yy) continue
+        for (const direction of directions) {
+            let xx = x
+            let yy = y
+            while (true) {
+                xx += direction[0]
+                yy += direction[1]
+                if (xx < 0 || xx >= input[0].length) break
+                if (yy < 0 || yy >= input.length) break
+
                 const seat = grid[key(xx, yy)]
                 if (seat === '#') {
                     count++
+                    break;
                 }
+                if (seat === 'L') break
             }
         }
         return count
@@ -209,10 +214,7 @@ const sampleInput = [
     }
 
     let solved = false
-    let cycle = 1
     while (!solved) {
-        console.log('Cycle ', cycle++)
-
         let nextConfiguration = {}
         for (let y = 0; y < input.length; y++) {
             let row = ''
@@ -222,24 +224,13 @@ const sampleInput = [
                 // console.log(count)
                 if (prevConfiguration[key(x, y)] === 'L' && count === 0) {  // If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
                     nextConfiguration[key(x, y)] = '#'
-                } else if (prevConfiguration[key(x, y)] === '#' && count >= 4) { // If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
+                } else if (prevConfiguration[key(x, y)] === '#' && count >= 5) { // If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
                     nextConfiguration[key(x, y)] = 'L'
                 } else {
                     nextConfiguration[key(x, y)] = prevConfiguration[key(x, y)]
                 }
-
             }
         }
-
-        // for (let y = 0; y < input.length; y++) {
-        //     let line = ''
-        //     for (let x = 0; x < input[0].length; x++) {
-        //         line += nextConfiguration[key(x, y)]
-        //     }
-        //     console.log(line)
-        // }
-        // console.log('==========\n')
-        // console.log(prevConfiguration, nextConfiguration)
 
         if (JSON.stringify(nextConfiguration) == JSON.stringify(prevConfiguration)) {
             solved = true
