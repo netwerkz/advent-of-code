@@ -1,5 +1,5 @@
 {
-  "name": "advent-of-code-2020",
+  "name": "advent-of-code",
   "version": "1.0.0",
   "description": "",
   "main": "01.js",
@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "combinate": "^1.1.7",
+    "combinations": "^1.0.0",
     "lodash": "^4.17.20"
   }
 }
