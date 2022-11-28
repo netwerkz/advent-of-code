@@ -556,12 +556,10 @@ const wrapScan = {
     let matches = 0
     for(const [item, count] of items) {
       if(['cats', 'trees'].includes(item)) {
-        //  greater than
         if(wrapScan[item] < Number(count)) {
           matches++
         }
       } else if(['pomeranians', 'goldfish'].includes(item)) {
-        //  fewer than
         if(wrapScan[item] > Number(count)) {
           matches++
         }
