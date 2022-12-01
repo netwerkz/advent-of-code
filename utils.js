@@ -31,7 +31,27 @@ function sumArray(array) {
   return sum
 }
 
+function getCombinations(arr) {
+  let combi = []
+  let temp = []
+  let slent = Math.pow(2, arr.length)
+
+  for (let i = 0; i < slent; i++) {
+    temp = []
+    for (let j = 0; j < arr.length; j++) {
+      if ((i & Math.pow(2, j))) {
+        temp.push(arr[j])
+      }
+    }
+    if (temp.length > 0) {
+      combi.push(temp)
+    }
+  }
+  return combi
+}
+
 module.exports = {
   allPermutations,
   sumArray,
+  getCombinations,
 }
