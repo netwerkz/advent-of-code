@@ -34,10 +34,30 @@ const limit = 150
     }
   }
 
-  console.log('Part 1: ', matches)
+  console.log('Part 1: ', matches) // 4372
 }
 
 { // Part 2
+  const state = {}
+  const combinations = getCombinations(input)
+  for (const combination of combinations) {
+    const sum = sumArray(combination)
+    if (sum === limit) {
+      const numContainers = combination.length
+      if(state[numContainers] === undefined) {
+        state[numContainers] = 0
+      }
+      state[numContainers]++
+    }
+  }
 
-  // console.log('Part 2: ', auntFound)
+  let result = null
+  let minCombinations = Number.POSITIVE_INFINITY
+  for(const [combinationsFound, containerCount] of Object.entries(state)) {
+    if(containerCount < minCombinations) {
+      minCombinations = containerCount
+      result = combinationsFound
+    }
+  }
+  console.log('Part 2: ', result) // 4
 }

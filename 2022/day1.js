@@ -2271,24 +2271,24 @@ const input = [
 ]
 
 const elves = {}
-  let elfIndex = 0;
-  for(const item of input) {
-    if(item === undefined) {
-      elfIndex ++
-      continue;
-    }
-
-    const prev = elves[elfIndex];
-    if(prev === undefined) {
-      elves[elfIndex] = 0;
-    }
-    elves[elfIndex] += item
+let elfIndex = 0;
+for (const item of input) {
+  if (item === undefined) {
+    elfIndex++
+    continue;
   }
+
+  const prev = elves[elfIndex];
+  if (prev === undefined) {
+    elves[elfIndex] = 0;
+  }
+  elves[elfIndex] += item
+}
 
 { // Part 1
   let mostCalloriesCarried = 0
-  for(const totalAmountCarried of Object.values(elves)) {
-    if(mostCalloriesCarried < totalAmountCarried) {
+  for (const totalAmountCarried of Object.values(elves)) {
+    if (mostCalloriesCarried < totalAmountCarried) {
       mostCalloriesCarried = totalAmountCarried
     }
   }
@@ -2297,8 +2297,8 @@ const elves = {}
 }
 
 { // Part 2
-  const sorted = Object.values(elves).sort(function(a, b){return b - a})
-  const top3 = sorted[0] + sorted[1] + sorted[2] 
+  const sorted = Object.values(elves).sort(function (a, b) { return b - a })
+  const top3 = sorted[0] + sorted[1] + sorted[2]
 
   console.log('Part 2: ', top3) // 211805
 }
