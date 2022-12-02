@@ -48,7 +48,6 @@ const Part2 = (input, expected) => {
     const deviceJoltage = sortedInput[sortedInput.length - 1] + 3
     const zero = 0
     sortedInput = [zero, ...sortedInput, deviceJoltage]
-    // console.log(sortedInput.join(','))
 
     const isSequenceValid = (arr) => {
         // if (arr[0] > 3) return false
@@ -115,7 +114,7 @@ const Part2 = (input, expected) => {
         result *= acc.size
     }
 
-    console.log(`[Part 2] expected [${expected}] got [${result}]`, /*original*/ /*, [...(acc)].sort()*/)
+    console.log(`[Part 2] expected [${expected}] got [${result}]`)
 }
 
 Part2(sampleInput1, 8)

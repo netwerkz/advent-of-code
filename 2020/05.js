@@ -843,7 +843,6 @@ const input = [
         col = colMin
 
         const id = row * 8 + col
-        // console.log(row, col, id)
         if (id > highest) {
             highest = id
         }
@@ -885,7 +884,7 @@ const input = [
             highest = id
         }
     }
-    // console.log(seats)    
+
     for (let i = 0; i < highest; i++) {
         const isCurrentSeatOccupied = !!seats[i]
         const isPrevSeatOccupied = !!seats[i - 1]

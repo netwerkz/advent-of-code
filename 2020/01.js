@@ -207,7 +207,6 @@ const input = [
     for (const first of input) {
         for (let i = offset; i < input.length; i++) {
             const second = input[i]
-            // console.log(first, second)
             if (first + second === 2020) {
                 console.log('[Part 1] found:', first, second)
                 console.log('[Part 1] multiplication:', first * second)
@@ -235,7 +234,6 @@ const input = [
                 if (first + second + third > 2020) {
                     continue
                 }
-                // console.log(first, second, third)
                 if (first + second + third === 2020) {
                     console.log('[Part 2] found:', first, second, third)
                     console.log('[Part 2] multiplication:', first * second * third)

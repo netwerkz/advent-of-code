@@ -18,7 +18,6 @@ const Part1 = (input, expected) => {
             fastestDeparture = nextDeparture
             line = id
         }
-        // console.log(`${startingOffset} % ${id} = ${startingOffset % id}, nextDeparture: ${nextDeparture}`)
     }
 
     console.log(`[Part 1] Expected ${expected}, got ${line * fastestDeparture}`)
@@ -26,8 +25,6 @@ const Part1 = (input, expected) => {
 
 Part1(sample, 295)
 Part1(input, '?')
-
-console.log('-----------')
 
 const Part2 = (input, expected) => {
     const ids = input.split(',').filter(el => el != 'x').map(el => parseInt(el))

@@ -75,8 +75,6 @@ const input = [
                 }
             }
         }
-        // console.log(`Cycle ${cycle}, expanded limits minX:${minX}, maxX:${maxX}, minY:${minY}, maxY:${maxY}, minZ:${minZ}, maxZ:${maxZ}, frame size ${Object.keys(nextFrame).length}`)
-        // console.log(frame, nextFrame)
 
         frame = nextFrame // cache frame for next cycle
     }

@@ -338,7 +338,6 @@ String.prototype.replaceAt = function (index, replacement) {
         if (isTree) {
             numTrees++
         }
-        // console.log(row.replaceAt(x, isTree ? 'X' : 'O'))
         x = (x + 3) % row.length
     }
     console.log(`[Part 1] Found ${numTrees} trees.`)
@@ -363,7 +362,6 @@ String.prototype.replaceAt = function (index, replacement) {
             if (isTree) {
                 numTrees++
             }
-            // console.log(row.replaceAt(x, isTree ? 'X' : 'O'))
             x = (x + increment[0]) % row.length
         }
         product *= numTrees

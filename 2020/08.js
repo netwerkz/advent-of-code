@@ -720,7 +720,6 @@ const input = [
             }
             executedLines[index] = true
 
-            // console.log(`Executing line ${index}: ${op} ${stepAmount}`)
             switch (op) {
                 case 'acc':
                     acc += stepAmount

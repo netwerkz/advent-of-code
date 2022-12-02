@@ -114,7 +114,6 @@ const sampleInput = [
 ]
 
 { // Part 1
-    // const input = sampleInput
     const countNeighbours = (x, y, grid) => {
         let count = 0
         for (let yy = y - 1; yy <= y + 1; yy++) {
@@ -175,7 +174,6 @@ const sampleInput = [
 }
 
 { // Part 2
-    // const input = sampleInput
     const directions = []
     for (let dirY = -1; dirY <= 1; dirY++) {
         for (let dirX = -1; dirX <= 1; dirX++) {
@@ -221,7 +219,6 @@ const sampleInput = [
             for (let x = 0; x < input[0].length; x++) {
                 const count = countNeighbours(x, y, prevConfiguration)
                 row += count
-                // console.log(count)
                 if (prevConfiguration[key(x, y)] === 'L' && count === 0) {  // If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
                     nextConfiguration[key(x, y)] = '#'
                 } else if (prevConfiguration[key(x, y)] === '#' && count >= 5) { // If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.

@@ -21,16 +21,6 @@ function allPermutations(items) {
   return results
 }
 
-function sumArray(array) {
-  let sum = 0
-
-  array.forEach(item => {
-    sum += item
-  })
-
-  return sum
-}
-
 function getCombinations(arr) {
   let combi = []
   let temp = []
@@ -52,6 +42,5 @@ function getCombinations(arr) {
 
 module.exports = {
   allPermutations,
-  sumArray,
   getCombinations,
 }

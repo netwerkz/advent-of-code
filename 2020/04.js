@@ -1021,7 +1021,6 @@ const mandatoryFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
         }
     }
     passports.push(currentPassport)
-    // console.log(passports)
 
     let validPassports = 0
     for (const passport of passports) {
@@ -1098,7 +1097,6 @@ const mandatoryFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
         }
     }
     passports.push(currentPassport)
-    // console.log(passports)
 
     let validPassports = 0
     for (const passport of passports) {

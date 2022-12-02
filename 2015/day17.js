@@ -1,4 +1,5 @@
-const { sumArray, getCombinations } = require('../utils')
+const { sum } = require('lodash')
+const { getCombinations } = require('../utils')
 
 const input = [
   11,
@@ -28,8 +29,8 @@ const limit = 150
   let matches = 0
   const combinations = getCombinations(input)
   for (const combination of combinations) {
-    const sum = sumArray(combination)
-    if (sum === limit) {
+    const result = sum(combination)
+    if (result === limit) {
       matches++
     }
   }
@@ -41,8 +42,8 @@ const limit = 150
   const state = {}
   const combinations = getCombinations(input)
   for (const combination of combinations) {
-    const sum = sumArray(combination)
-    if (sum === limit) {
+    const result = sum(combination)
+    if (result === limit) {
       const numContainers = combination.length
       if(state[numContainers] === undefined) {
         state[numContainers] = 0

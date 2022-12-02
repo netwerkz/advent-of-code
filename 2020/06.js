@@ -2281,7 +2281,6 @@ const input = [
 
     for(const group of groups) {
         const commonQuestion = intersection(...group)
-        // console.log(...group, commonQuestion)
         sum += commonQuestion.length
     }
     console.log('[Part 2] Sum is: ', sum)
