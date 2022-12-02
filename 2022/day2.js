@@ -2519,45 +2519,45 @@ const PTS_SCISSORS = 3
 
 { // Part 1
   function getPoints(opponent, me) {
-    if(opponent === OPPONENT_ROCK_A) {
-      if(me === ME_ROCK_X) return [
-        PTS_ROCK + PTS_DRAW, 
+    if (opponent === OPPONENT_ROCK_A) {
+      if (me === ME_ROCK_X) return [
+        PTS_ROCK + PTS_DRAW,
         PTS_ROCK + PTS_DRAW
       ]
-      if(me === ME_PAPER_Y) return [
-        PTS_ROCK + PTS_LOSE, 
+      if (me === ME_PAPER_Y) return [
+        PTS_ROCK + PTS_LOSE,
         PTS_PAPER + PTS_WIN
       ]
-      if(me === ME_SCISSORS_Z) return [
-        PTS_ROCK + PTS_WIN, 
+      if (me === ME_SCISSORS_Z) return [
+        PTS_ROCK + PTS_WIN,
         PTS_SCISSORS + PTS_LOSE
       ]
     }
-    if(opponent === OPPONENT_PAPER_B) {
-      if(me === ME_ROCK_X) return [
-        PTS_PAPER + PTS_WIN, 
+    if (opponent === OPPONENT_PAPER_B) {
+      if (me === ME_ROCK_X) return [
+        PTS_PAPER + PTS_WIN,
         PTS_ROCK + PTS_LOSE
       ]
-      if(me === ME_PAPER_Y) return [
-        PTS_PAPER + PTS_DRAW, 
+      if (me === ME_PAPER_Y) return [
+        PTS_PAPER + PTS_DRAW,
         PTS_PAPER + PTS_DRAW
       ]
-      if(me === ME_SCISSORS_Z) return [
-        PTS_PAPER + PTS_LOSE, 
+      if (me === ME_SCISSORS_Z) return [
+        PTS_PAPER + PTS_LOSE,
         PTS_SCISSORS + PTS_WIN
       ]
     }
-    if(opponent === OPPONENT_SCISSORS_C) {
-      if(me === ME_ROCK_X) return [
-        PTS_SCISSORS + PTS_LOSE, 
+    if (opponent === OPPONENT_SCISSORS_C) {
+      if (me === ME_ROCK_X) return [
+        PTS_SCISSORS + PTS_LOSE,
         PTS_ROCK + PTS_WIN
       ]
-      if(me === ME_PAPER_Y) return [
-        PTS_SCISSORS + PTS_WIN, 
+      if (me === ME_PAPER_Y) return [
+        PTS_SCISSORS + PTS_WIN,
         PTS_PAPER + PTS_LOSE
       ]
-      if(me === ME_SCISSORS_Z) return [
-        PTS_SCISSORS + PTS_DRAW, 
+      if (me === ME_SCISSORS_Z) return [
+        PTS_SCISSORS + PTS_DRAW,
         PTS_SCISSORS + PTS_DRAW
       ]
     }
@@ -2565,7 +2565,7 @@ const PTS_SCISSORS = 3
 
   let opponentScore = 0
   let myScore = 0
-  for(const round of input) {
+  for (const round of input) {
     const [opponent, me] = round.split(' ')
     const [opponentPts, myPts] = getPoints(opponent, me)
 
@@ -2578,44 +2578,44 @@ const PTS_SCISSORS = 3
 
 { // Part 2
   function getPoints(opponent, me) {
-    if(opponent === OPPONENT_ROCK_A) {
-      if(me === NEED_LOSE_X) return [
-        PTS_WIN + PTS_ROCK, 
+    if (opponent === OPPONENT_ROCK_A) {
+      if (me === NEED_LOSE_X) return [
+        PTS_WIN + PTS_ROCK,
         PTS_LOSE + PTS_SCISSORS
       ]
-      if(me === NEED_DRAW_Y) return [
+      if (me === NEED_DRAW_Y) return [
         PTS_DRAW + PTS_ROCK,
         PTS_DRAW + PTS_ROCK
       ]
-      if(me === NEED_WIN_Z) return [
+      if (me === NEED_WIN_Z) return [
         PTS_LOSE + PTS_ROCK,
         PTS_WIN + PTS_PAPER
       ]
     }
-    if(opponent === OPPONENT_PAPER_B) {
-      if(me === NEED_LOSE_X) return [
+    if (opponent === OPPONENT_PAPER_B) {
+      if (me === NEED_LOSE_X) return [
         PTS_WIN + PTS_PAPER,
         PTS_LOSE + PTS_ROCK
       ]
-      if(me === NEED_DRAW_Y) return [
+      if (me === NEED_DRAW_Y) return [
         PTS_DRAW + PTS_PAPER,
         PTS_DRAW + PTS_PAPER
       ]
-      if(me === NEED_WIN_Z) return [
+      if (me === NEED_WIN_Z) return [
         PTS_LOSE + PTS_PAPER,
         PTS_WIN + PTS_SCISSORS
       ]
     }
-    if(opponent === OPPONENT_SCISSORS_C) {
-      if(me === NEED_LOSE_X) return [
+    if (opponent === OPPONENT_SCISSORS_C) {
+      if (me === NEED_LOSE_X) return [
         PTS_WIN + PTS_SCISSORS,
         PTS_LOSE + PTS_PAPER
       ]
-      if(me === NEED_DRAW_Y) return [
+      if (me === NEED_DRAW_Y) return [
         PTS_DRAW + PTS_SCISSORS,
         PTS_DRAW + PTS_SCISSORS
       ]
-      if(me === NEED_WIN_Z) return [
+      if (me === NEED_WIN_Z) return [
         PTS_LOSE + PTS_SCISSORS,
         PTS_WIN + PTS_ROCK
       ]
@@ -2624,7 +2624,7 @@ const PTS_SCISSORS = 3
 
   let opponentScore = 0
   let myScore = 0
-  for(const round of input) {
+  for (const round of input) {
     const [opponent, me] = round.split(' ')
     const [opponentPts, myPts] = getPoints(opponent, me)
 
