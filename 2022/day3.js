@@ -313,7 +313,7 @@ const sampleInput = [
   'CrZsJsPPZsGzwwsLwLmpwMDw',
 ]
 
-const types = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+const priorities = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 { // Part 1
   let sum = 0
@@ -325,7 +325,7 @@ const types = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     const commonItems = intersection(left, right)
     assert(commonItems.length === 1)
 
-    const priority = types.indexOf(commonItems[0]) + 1 // 0 indexed
+    const priority = priorities.indexOf(commonItems[0])
     sum += priority
   }
 
@@ -340,7 +340,7 @@ const types = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     const commonItems = intersection(input[i].split(''), input[i + 1].split(''), input[i + 2].split(''))
     assert(commonItems.length === 1)
 
-    const priority = types.indexOf(commonItems[0]) + 1 // 0 indexed
+    const priority = priorities.indexOf(commonItems[0])
     sum += priority
   }
 

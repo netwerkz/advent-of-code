@@ -1,3 +1,6 @@
+const assert = require('assert')
+const { cloneDeep, sum } = require('lodash')
+
 const input = [
   '####.#.##.###.#.#.##.#..###.#..#.#.#..##....#.###...##..###.##.#.#.#.##...##..#..#....#.#.##..#...##',
   '.##...##.##.######.#.#.##...#.#.#.#.#...#.##.#..#.#.####...#....#....###.#.#.#####....#.#.##.#.#.##.',
@@ -109,38 +112,103 @@ const sampleInput = [
   '#.#..#',
   '####..',
 ]
+const ON = '#'
+const OFF = '.'
 
 { // Part 1
   function getNewLightState(y, x, prevState) {
-    for(let yy = -1; yy <= 1; yy++) {
-      for(let xx = -1; xx <= 1; xx++) {
-        if(yy === 0 && xx === 0) continue
+    const currentState = prevState[y][x]
+    let countNeighboursOn = 0
+    for (let yy = -1; yy <= 1; yy++) {
+      for (let xx = -1; xx <= 1; xx++) {
+        if (yy === 0 && xx === 0) continue
 
-        const neighbour = prevState?.[yy]?.[xx]
-        
-      }  
-    }
-  }
-  
-
-  // NOTE: the missing ones count as OFF
-  // '#' ON
-  // '.' OFF
-
-  const prevState = [...input]
-  const nextState = prevState
-  const steps = 4
-  for(let i = 0; i < steps; i++) {
-    for(let y = 0; y < prevState.length; y++) {
-      for(let x = 0; x < prevState[0].length; x++) {
-        const newLightState = getNewLightState(y, x, prevState)
+        const neighbour = prevState?.[yy + y]?.[xx + x]
+        if (neighbour === '#') {
+          countNeighboursOn++
+        }
       }
-    }    
+    }
+
+    if (currentState === ON) {
+      return [2, 3].includes(countNeighboursOn) ? ON : OFF
+    } else if (currentState === OFF) {
+      return countNeighboursOn === 3 ? ON : OFF
+    }
+    assert(false)
   }
 
-  console.log('Part 1:')
+  let prevState = [...input]
+  // let prevState = cloneDeep(sampleInput)
+  for (let y = 0; y < prevState.length; y++) {
+    prevState[y] = prevState[y].split('')
+  }
+
+  const steps = 100
+  for (let i = 0; i < steps; i++) {
+    let newState = cloneDeep(prevState)
+    for (let y = 0; y < prevState.length; y++) {
+      for (let x = 0; x < prevState[0].length; x++) {
+        const state = getNewLightState(y, x, prevState)
+        newState[y][x] = state
+      }
+    }
+    prevState = cloneDeep(newState)
+  }
+
+  const countLightOn = sum(prevState.map((row) => row.filter((light) => light === '#').length))
+
+  console.log('Part 1:', countLightOn) // 768
 }
 
 { // Part 2
+  function getNewLightState(y, x, prevState) {
+    const isTopLeft = (y === 0) && (x === 0)
+    const isTopRight = (y === 0) && (x === prevState[0].length - 1)
+    const isBottomLeft = (y === prevState.length - 1) && (x === 0)
+    const isBottomRight = (y === prevState.length - 1) && (x === prevState[0].length - 1)
+    if (isTopLeft || isTopRight || isBottomLeft || isBottomRight) return ON
 
+    const currentState = prevState[y][x]
+    let countNeighboursOn = 0
+    for (let yy = -1; yy <= 1; yy++) {
+      for (let xx = -1; xx <= 1; xx++) {
+        if (yy === 0 && xx === 0) continue
+
+        const neighbour = prevState?.[yy + y]?.[xx + x]
+        if (neighbour === '#') {
+          countNeighboursOn++
+        }
+      }
+    }
+
+    if (currentState === ON) {
+      return [2, 3].includes(countNeighboursOn) ? ON : OFF
+    } else if (currentState === OFF) {
+      return countNeighboursOn === 3 ? ON : OFF
+    }
+    assert(false)
+  }
+
+  let prevState = [...input]
+  // let prevState = cloneDeep(sampleInput)
+  for (let y = 0; y < prevState.length; y++) {
+    prevState[y] = prevState[y].split('')
+  }
+
+  const steps = 100
+  for (let i = 0; i < steps; i++) {
+    let newState = cloneDeep(prevState)
+    for (let y = 0; y < prevState.length; y++) {
+      for (let x = 0; x < prevState[0].length; x++) {
+        const state = getNewLightState(y, x, prevState)
+        newState[y][x] = state
+      }
+    }
+    prevState = cloneDeep(newState)
+  }
+
+  const countLightOn = sum(prevState.map((row) => row.filter((light) => light === '#').length))
+
+  console.log('Part 2:', countLightOn) // 781
 }
