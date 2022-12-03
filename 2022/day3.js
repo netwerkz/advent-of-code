@@ -319,13 +319,14 @@ const types = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let sum = 0
   for (const rucksack of input) {
     assert(rucksack.length % 2 === 0) // make sure the splits will be even
-    
+
     const left = rucksack.substring(0, rucksack.length / 2).split('')
     const right = rucksack.substring(rucksack.length / 2).split('')
     const commonItems = intersection(left, right)
-
     assert(commonItems.length === 1)
-    sum += types.indexOf(commonItems[0]) + 1 // 0 indexed
+
+    const priority = types.indexOf(commonItems[0]) + 1 // 0 indexed
+    sum += priority
   }
 
   console.log('Part 1:', sum) // 7831
@@ -338,7 +339,9 @@ const types = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   for (let i = 0; i < input.length; i += 3) {
     const commonItems = intersection(input[i].split(''), input[i + 1].split(''), input[i + 2].split(''))
     assert(commonItems.length === 1)
-    sum += types.indexOf(commonItems[0]) + 1 // 0 indexed
+
+    const priority = types.indexOf(commonItems[0]) + 1 // 0 indexed
+    sum += priority
   }
 
   console.log('Part 2:', sum) // 2683
