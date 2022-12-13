@@ -123,11 +123,14 @@ String.prototype.replaceAndPushCharsAt = function (index, replacement, pushChars
 
           const newMolecule = sourceMolecule.replaceAndPushCharsAt(lastIndex, toElement, fromElement.length)
           const isNewMolecule = newMolecule.length <= minifiedMolecule.length && alreadySequencedMolecules.has(newMolecule) === false
-          const isRepeatingTooManyTimes = (new RegExp(`${toElement}${toElement}`, "g")).test(newMolecule); 
+          
 
-          if (isNewMolecule && !isRepeatingTooManyTimes) {
-            alreadySequencedMolecules.add(newMolecule)
-            discoveredMolecules.push(newMolecule)
+          if (isNewMolecule) {
+            const isRepeatingTooManyTimes = (new RegExp(`${toElement}${toElement}${toElement}`, "g")).test(newMolecule); 
+            if(!isRepeatingTooManyTimes) {
+              alreadySequencedMolecules.add(newMolecule)
+              discoveredMolecules.push(newMolecule)
+            }
           }
 
           lastIndex++
@@ -135,7 +138,6 @@ String.prototype.replaceAndPushCharsAt = function (index, replacement, pushChars
       }
     }
 
-    // throw out molecules larger than target molecule.length
     for (const discoveredMolecule of discoveredMolecules) {
       newState.add(discoveredMolecule)
       if (discoveredMolecule === minifiedMolecule) {
