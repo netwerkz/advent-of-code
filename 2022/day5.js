@@ -575,7 +575,7 @@ const moves = [
     const box = stacks[col].pop()
     chars.push(box)
   }
-  const result = chars.join('') 
+  const result = chars.join('')
   console.log('Part 1: ', result) // TDCHVHJTG
 }
 
@@ -626,6 +626,6 @@ const moves = [
     const box = stacks[col].pop()
     chars.push(box)
   }
-  const result = chars.join('') 
+  const result = chars.join('')
   console.log('Part 2: ', result) // NGCMPJLHV
 }
