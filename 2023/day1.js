@@ -1060,21 +1060,21 @@ const input = [
     'eight': 8,
     'nine': 9,
   }
-  const DIGITS = [...Object.keys(MAPPINGS), ...Object.values(MAPPINGS)]
+  const TOKENS = [...Object.keys(MAPPINGS), ...Object.values(MAPPINGS)]
 
-  function getDigit(line, isFirst = true) {
+  function getDigit(line, sortAscending = true) {
     const map = new Map()
-    for (const digit of DIGITS) {
+    for (const token of TOKENS) {
       let lastIndex = 0
       while(true) {
-        const index = line.indexOf(digit, lastIndex)
+        const index = line.indexOf(token, lastIndex)
         if(index === -1) break;
 
-        map.set(index, digit)
+        map.set(index, token)
         lastIndex = index + 1
       } 
     }
-    const mapKeys = [...map.keys()].filter((key) => key >= 0).sort(function (a, b) {  return isFirst ? a - b : b - a })
+    const mapKeys = [...map.keys()].filter((key) => key >= 0).sort(function (a, b) {  return sortAscending ? a - b : b - a })
     return map.get(mapKeys[0])
   }
 
