@@ -1,3 +1,4 @@
+const { last } = require('lodash');
 const assert = require('node:assert/strict');
 
 const input = [
@@ -1061,35 +1062,33 @@ const input = [
   }
   const DIGITS = [...Object.keys(MAPPINGS), ...Object.values(MAPPINGS)]
 
-  function getFirstDigit(line) {
+  function getDigit(line, isFirst = true) {
     const map = new Map()
     for (const digit of DIGITS) {
-      map.set(line.indexOf(digit), digit)
+      let lastIndex = 0
+      while(true) {
+        const index = line.indexOf(digit, lastIndex)
+        if(index === -1) break;
+
+        map.set(index, digit)
+        lastIndex = index + 1
+      } 
     }
-    const mapKeys = [...map.keys()].filter((key) => key >= 0).sort(function (a, b) { return a - b })
-    return map.get(mapKeys[0])
-  }
-  function getLastDigit(line) {
-    const map = new Map()
-    for (const digit of DIGITS) {
-      map.set(line.indexOf(digit), digit)
-    }
-    const mapKeys = [...map.keys()].filter((key) => key >= 0).sort(function (a, b) { return b - a })
+    const mapKeys = [...map.keys()].filter((key) => key >= 0).sort(function (a, b) {  return isFirst ? a - b : b - a })
     return map.get(mapKeys[0])
   }
 
   let total = 0;
   for (const line of input) {
-    const firstDigitStr = getFirstDigit(line)
-    const lastDigitStr = getLastDigit(line)
+    const firstDigitStr = getDigit(line, true)
+    const lastDigitStr = getDigit(line, false)
 
     const firstDigitNum = MAPPINGS[firstDigitStr] || firstDigitStr
     const lastDigitNum = MAPPINGS[lastDigitStr] || lastDigitStr
     const number = Number(`${firstDigitNum}${lastDigitNum}`)
     total += number
-    // console.log('total', total)
   }
 
-  console.log('Part 2: ', total) // ?
+  console.log('Part 2: ', total) // 54770
 }
 
