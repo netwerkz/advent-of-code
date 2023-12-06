@@ -116,33 +116,48 @@ const MAX_BLUE = 14
 
 { // Part 1
   let sum = 0;
-  for(const string of input) {
+  for (const string of input) {
     const [game, rounds] = string.split(': ')
     const ID = game.split(' ')[1]
     let success = true;
-    for(const round of rounds.split('; ')) {
-      for(const cubes of round.split(', ')) {
+    for (const round of rounds.split('; ')) {
+      for (const cubes of round.split(', ')) {
         const [amount, color] = cubes.split(' ')
-        
-        if(color === 'red' && amount > MAX_RED) {
+
+        if (color === 'red' && amount > MAX_RED) {
           success = false
         }
-        if(color === 'green' && amount > MAX_GREEN) {
+        if (color === 'green' && amount > MAX_GREEN) {
           success = false
         }
-        if(color === 'blue' && amount > MAX_BLUE) {
+        if (color === 'blue' && amount > MAX_BLUE) {
           success = false
         }
       }
     }
-    if(success) {
+    if (success) {
       sum += Number(ID)
     }
   }
-  
+
   console.log('Part 1:', sum) // 2085
 }
 
 { // Part 2
-
+  let sum = 0;
+  for (const string of input) {
+    const [, rounds] = string.split(': ')
+    const gameMin = { min_red: 0, min_blue: 0, min_green: 0 }
+    for (const round of rounds.split('; ')) {
+      for (const cubes of round.split(', ')) {
+        const [amount, color] = cubes.split(' ')
+        if (gameMin[`min_${color}`] < Number(amount)) {
+          gameMin[`min_${color}`] = Number(amount)
+        }
+      }
+    }
+    const power = gameMin.min_red * gameMin.min_blue * gameMin.min_green
+    sum += power
+  }
+  console.log('Part 2:', sum) // 79315
 }
