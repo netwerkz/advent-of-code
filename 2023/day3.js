@@ -160,7 +160,7 @@ const DIGITS = '0123456789'
 
 { // Part 1
   let sum = 0
-  const targetInput = sampleInput
+  const targetInput = input
   for (let y = 0; y < targetInput.length; y++) {
     const line = targetInput[y]
 
@@ -184,14 +184,13 @@ const DIGITS = '0123456789'
         }
 
         const minY = max([startingY - 1, 0])
-        const maxY = min([(startingY + 2), targetInput.length - 1])
+        const maxY = min([(startingY + 1), targetInput.length - 1])
         const minX = max([startingX - 1, 0])
         const maxX = min([(startingX + numberStrAccumulator.length), line.length - 1])
         let isSurroundedByChar = false
         let breakLoop = false
         for (let yy = minY; yy <= maxY && !breakLoop; yy++) {
           for (let xx = minX; xx <= maxX && !breakLoop; xx++) {
-            // console.log(yy, xx
             const potentialSymbol = targetInput[yy][xx]
             const isSymbol = ![...DIGITS, '.'].includes(potentialSymbol)
             if (isSymbol) {
@@ -216,5 +215,7 @@ const DIGITS = '0123456789'
 
   console.log('Part 1:', sum) 
   // 382601 too low
+  // 527007 too low
+  // 531904 incorrect
   // 538387 too high
 }
